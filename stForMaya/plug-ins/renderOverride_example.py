@@ -337,7 +337,7 @@ class DrawManipulatorOverride(omr.MRenderOverride):
 
 
 def initializePlugin(mobj):
-    om.MFnPlugin(mobj, __author__, __version__, 'Any')
+    om.MFnPlugin(mobj, "liuzhen", "2017", 'Any')
 
     try:
         global renderOverrideInstance
