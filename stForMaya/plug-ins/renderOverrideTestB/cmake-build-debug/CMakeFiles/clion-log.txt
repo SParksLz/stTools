@@ -1,0 +1,16 @@
+"C:\Program Files\JetBrains\CLion 2018.2\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - NMake Makefiles" E:\liuzhen\Learning\sparksTools\stForMaya\plug-ins\renderOverrideTestB
+-- Configuring done
+CMake Error at CMakeLists.txt:12 (add_library):
+  Cannot find source file:
+
+    pluginMain.cpp
+
+  Tried extensions .c .C .c++ .cc .cpp .cxx .cu .m .M .mm .h .hh .h++ .hm
+  .hpp .hxx .in .txx
+
+
+CMake Error at CMakeLists.txt:12 (add_library):
+  No SOURCES given to target: renderOverrideTestB
+
+
+-- Build files have been written to: E:/liuzhen/Learning/sparksTools/stForMaya/plug-ins/renderOverrideTestB/cmake-build-debug
