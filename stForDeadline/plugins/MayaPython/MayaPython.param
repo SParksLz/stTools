@@ -1,0 +1,55 @@
+[About]
+Type=label
+Label=About
+Category=About Plugin
+CategoryOrder=-1
+Index=0
+Default=Maya Python Plugin for Deadline
+Description=Not configurable
+
+[ConcurrentTasks]
+Type=label
+Label=ConcurrentTasks
+Category=About Plugin
+CategoryOrder=-1
+Index=0
+Default=True
+Description=Not configurable
+
+
+
+[MayaPythonExecutable_alembic]
+Type=multilinemultifilename
+Category=Render Executables
+CategoryOrder=0
+Index=15
+Label=Export Alembic with maya standalone
+Default=/opt/Thinkbox/DeadlineRepository10/Render/maya-python/PythonMayaExportAlembic
+Description=Exporting alembic with maya standalone.
+
+[MayaPythonExecutable_rsproxy]
+Type=multilinemultifilename
+Category=Render Executables
+CategoryOrder=0
+Index=15
+Label=Export Redshift proxy with maya standalone
+Default=/opt/Thinkbox/DeadlineRepository10/Render/maya-python/PythonMayaExportRsProxy
+Description=Exporting redshift proxy with maya standalone.
+
+[MayaPythonExecutable_2018]
+Type=multilinemultifilename
+Category=Render Executables
+CategoryOrder=0
+Index=15
+Label=Export Redshift proxy with maya standalone
+Default=/apps/shared/ddp/maya/2018.0.6/bin/mayapy
+Description=Exporting redshift proxy with maya standalone.
+
+[MayaPythonExecutable_2019]
+Type=multilinemultifilename
+Category=Render Executables
+CategoryOrder=0
+Index=15
+Label=Export Redshift proxy with maya standalone
+Default=/apps/shared/ddp/maya/2019.0.2/bin/mayapy
+Description=Exporting redshift proxy with maya standalone.
