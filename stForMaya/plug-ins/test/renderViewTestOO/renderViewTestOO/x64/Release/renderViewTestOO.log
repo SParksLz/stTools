@@ -1,8 +1,0 @@
-﻿  renderOverrideview.cpp
-e:\liuzhen\learning\sparkstools\stformaya\plug-ins\test\renderviewtestoo\renderviewtestoo\renderoverrideview.cpp(138): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-e:\liuzhen\learning\sparkstools\stformaya\plug-ins\test\renderviewtestoo\renderviewtestoo\renderoverrideview.cpp(139): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-    正在创建库 E:\liuzhen\Learning\sparksTools\stForMaya\plug-ins\test\renderViewTestOO\x64\Release\renderViewTestOO.lib 和对象 E:\liuzhen\Learning\sparksTools\stForMaya\plug-ins\test\renderViewTestOO\x64\Release\renderViewTestOO.exp
-  正在生成代码
-  All 32 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
-  已完成代码的生成
-  renderViewTestOO.vcxproj -> E:\liuzhen\Learning\sparksTools\stForMaya\plug-ins\test\renderViewTestOO\x64\Release\renderViewTestOO.mll
