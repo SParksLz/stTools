@@ -5,7 +5,7 @@ from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 
 '''
-this .py file show how to create a grid listwidget with icon
+this .py file shows how to create a grid listwidget with icon
 '''
 
 
