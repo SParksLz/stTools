@@ -53,20 +53,23 @@ class progressList(QtWidgets.QListWidget) :
         self.setItemWidget(self.__itemFrame, self.__customItem)
 
     def add_items(self, array):
-        maxNum = len(array[0].geometry().prims())
-        for i in array :
-            currentNum = len(i.geometry().prims())
-            nodeName = i.name()
-            self.addCustomItem(nodeName, currentNum, maxNum)
+        if len(array) > 0 :
+            maxNum = len(array[0].geometry().prims())
+            for i in array :
+                currentNum = len(i.geometry().prims())
+                nodeName = i.name()
+                self.addCustomItem(nodeName, currentNum, maxNum)
 
 
 class nodeList(QtWidgets.QListWidget) :
     def __init__(self):
         super(nodeList, self).__init__()
+        self.setSelectionMode(QtWidgets.QAbstractItemView.ExtendedSelection)
 
     def add_items(self, array):
         for i in array :
-            self.addItem(i)
+            currentItem = self.addItem(i)
+
 
 
 class listFrame(QtWidgets.QFrame):
@@ -80,15 +83,19 @@ class listFrame(QtWidgets.QFrame):
         self.__nodeList = nodeList()
         self.__progressList = progressList()
 
+
         self.__mainLayout.addLayout(self.__progressLayout)
         self.__mainLayout.addLayout(self.__nodeLayout)
         self.__progressLayout.addWidget(self.__progressList)
         self.__nodeLayout.addWidget(self.__nodeList)
 
+
         self.setAcceptDrops(True)
         self.setLayout(self.__mainLayout)
 
 
+    def printHello(self):
+        print "delete sth"
 
     def dragEnterEvent(self, event):
         event.acceptProposedAction()
@@ -103,11 +110,23 @@ class listFrame(QtWidgets.QFrame):
                     if i not in self._node_array :
                         self._node_array.append(i)
         self.update()
-
-
-
-
         event.acceptProposedAction()
+
+    def keyPressEvent(self, event):
+        currentKey = event.key()
+        if currentKey == QtCore.Qt.Key_Delete :
+            self.removeItem()
+            self.update()
+
+    def removeItem(self):
+        items_selected = self.__nodeList.selectedItems()
+        # print items_selected[0].text()
+        # print self._node_array
+        for item_s in items_selected :
+            currentName = str(item_s.text())
+            print currentName
+            self._node_array.remove(currentName)
+
 
     def update(self):
         self.__progressList.clear()
