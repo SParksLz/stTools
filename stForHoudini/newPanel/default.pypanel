@@ -6,36 +6,20 @@
  same interface or of the interfaces menu are not allowed
  in a single file. -->
   <interfacesMenu type="toolbar">
-    <interfaceItem name="interface2"/>
+    <separatorItem/>
+    <interfaceItem name="prim_count_compare"/>
   </interfacesMenu>
   <interfacesMenu type="panetab">
-    <interfaceItem name="interface2"/>
+    <separatorItem/>
+    <interfaceItem name="prim_count_compare"/>
   </interfacesMenu>
-  <interface name="interface2" label="New Python Interface" icon="MISC_python" showNetworkNavigationBar="false" help_url="">
-    <script><![CDATA[########################################################################
-# Replace the sample code below with your own to create a
-# PyQt5 or PySide2 interface.  Your code must define an
-# onCreateInterface() function that returns the root widget of
-# your interface.
-#
-# The 'hutil.Qt' is for internal-use only.
-# It is a wrapper module that enables the sample code below to work with
-# either a Qt4 or Qt5 environment for backwards-compatibility.
-#
-# When developing your own Python Panel, import directly from PySide2
-# or PyQt5 instead of from 'hutil.Qt'.
-########################################################################
-
-#
-# SAMPLE CODE
-#
-import core
+  <interface name="prim_count_compare" label="Primitive count compare" icon="MISC_python" showNetworkNavigationBar="false" help_url="">
+    <script><![CDATA[import core
 reload(core)
 
 def onCreateInterface():
     widget = core.getWidget()
-    return widget
-]]></script>
+    return widget]]></script>
     <includeInPaneTabMenu menu_position="100" create_separator="false"/>
     <includeInToolbarMenu menu_position="100" create_separator="false"/>
     <help><![CDATA[]]></help>

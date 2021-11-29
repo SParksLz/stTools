@@ -1,19 +1,73 @@
 import s_core
+reload(s_core)
 import hou
 from PySide2 import QtWidgets
 from PySide2 import QtGui
 from PySide2 import QtCore
+import hou
+
+class customBar(QtWidgets.QProgressBar) :
+    def __init__(self):
+        super(customBar, self).__init__()
+        # print "progress bar init"
+        self.setAlignment(QtCore.Qt.AlignLeft)
+        self.setFormat("%v")
+        self.setStyleSheet("QProgressBar::chunk  {background-color: #CD96CD; border-radius :5px;}"
+                           "QProgressBar {border: 1px solid grey;border-radius: 5px; text-align:center;}")
+
+
+class progressItem(QtWidgets.QWidget) :
+    def __init__(self, name, num, max):
+        super(progressItem, self).__init__()
+        self.name = name
+        self.num = num
+        self.max = max
+        self.__mainLayout = QtWidgets.QHBoxLayout()
+        self.setLayout(self.__mainLayout)
+
+        self.__lable = QtWidgets.QLabel(name)
+        self.__processBar = customBar()
+
+        self.layout().addWidget(self.__lable)
+        self.layout().addWidget(self.__processBar)
+
+    def setBarRange(self):
+        self.__processBar.setRange(0, self.max)
+
+    def setBarValue(self):
+        self.__processBar.setValue(self.num)
+
 
 
 class progressList(QtWidgets.QListWidget) :
     def __init__(self):
         super(progressList, self).__init__()
 
+    def addCustomItem(self, name, num, max):
+        self.__customItem = progressItem(name, num, max)
+        self.__customItem.setBarRange()
+        self.__customItem.setBarValue()
+        self.__itemFrame = QtWidgets.QListWidgetItem(self)
+
+        self.__itemFrame.setSizeHint(QtCore.QSize(90, 34))
+        self.setItemWidget(self.__itemFrame, self.__customItem)
+
+    def add_items(self, array):
+        maxNum = len(array[0].geometry().prims())
+        for i in array :
+            currentNum = len(i.geometry().prims())
+            nodeName = i.name()
+            self.addCustomItem(nodeName, currentNum, maxNum)
 
 
 class nodeList(QtWidgets.QListWidget) :
     def __init__(self):
         super(nodeList, self).__init__()
+
+    def add_items(self, array):
+        for i in array :
+            self.addItem(i)
+
 
 class listFrame(QtWidgets.QFrame):
     def __init__(self):
@@ -23,10 +77,8 @@ class listFrame(QtWidgets.QFrame):
         self.__progressLayout = QtWidgets.QVBoxLayout()
         self.__mainLayout = QtWidgets.QHBoxLayout()
 
-        self.__nodeList = QtWidgets.QListWidget()
-        self.__progressList = QtWidgets.QListWidget()
-
-
+        self.__nodeList = nodeList()
+        self.__progressList = progressList()
 
         self.__mainLayout.addLayout(self.__progressLayout)
         self.__mainLayout.addLayout(self.__nodeLayout)
@@ -37,38 +89,35 @@ class listFrame(QtWidgets.QFrame):
         self.setLayout(self.__mainLayout)
 
 
-    def __addItem(self, data):
-        self.__progressList.addItem(data)
-
-        self.__nodeList.addItem(data)
 
     def dragEnterEvent(self, event):
         event.acceptProposedAction()
 
     def dropEvent(self, event):
-        str = event.mimeData().data(hou.qt.mimeType.nodePath)
-        if str :
-            str_array = str.split("\t")
+        str_data = event.mimeData().data(hou.qt.mimeType.nodePath)
+        if str_data :
+            str_array = [str(s) for s in str_data.split("\t")]
+            array_sorted = s_core.sortNodeList(str_array)
             if len(str_array) >= 0 :
                 for i in str_array :
                     if i not in self._node_array :
+                        print "aaaaaa"
                         self._node_array.append(i)
-                        self.__addItem("{}".format(i))
-                    # self.addItem(i)
-        # str_array = str.split("\t")
-        # self.addItem(str)
+        self.update()
+
+
 
 
         event.acceptProposedAction()
 
+    def update(self):
+        self.__progressList.clear()
+        self.__nodeList.clear()
 
-
-
-
-
-
-
-
+        str_array = self._node_array
+        array_sorted = s_core.sortNodeList(str_array)
+        self.__progressList.add_items(array_sorted)
+        self.__nodeList.add_items(str_array)
 
 class mainWidget(QtWidgets.QWidget) :
     def __init__(self):
@@ -80,23 +129,14 @@ class mainWidget(QtWidgets.QWidget) :
         self.__testLable = QtWidgets.QLabel("Test")
         self.__mainLayout = QtWidgets.QVBoxLayout()
         self.__subLayout = QtWidgets.QHBoxLayout()
-        self.__subLayout_r = QtWidgets.QVBoxLayout()
-        self.__subLayout_l = QtWidgets.QVBoxLayout()
 
         self.setLayout(self.__mainLayout)
         self.__mainLayout.addWidget(self.__testLable)
         self.__mainLayout.addLayout(self.__subLayout)
-        self.__subLayout.addLayout(self.__subLayout_l)
-        self.__subLayout.addLayout(self.__subLayout_r)
-
 
     def __buildListWidget(self):
-        self.__pbList = progressList()
-        self.__nodeList = nodeList()
-        self.__aaa = listFrame()
-        self.__subLayout_l.addWidget(self.__pbList)
-        self.__subLayout_r.addWidget(self.__nodeList)
-        self.__subLayout_r.addWidget(self.__aaa)
+        self.__nodeFrame = listFrame()
+        self.__subLayout.addWidget(self.__nodeFrame)
 
 
 
