@@ -101,7 +101,6 @@ class listFrame(QtWidgets.QFrame):
             if len(str_array) >= 0 :
                 for i in str_array :
                     if i not in self._node_array :
-                        print "aaaaaa"
                         self._node_array.append(i)
         self.update()
 
