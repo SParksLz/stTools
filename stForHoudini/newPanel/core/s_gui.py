@@ -124,7 +124,7 @@ class listFrame(QtWidgets.QFrame):
         # print self._node_array
         for item_s in items_selected :
             currentName = str(item_s.text())
-            print currentName
+            # print currentName
             self._node_array.remove(currentName)
 
 
