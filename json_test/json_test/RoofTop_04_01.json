@@ -1,0 +1,93 @@
+{
+  "Repeated": [
+    {
+      "Node": [
+        {
+          "Repeated": [], 
+          "SubPart": {}, 
+          "Trivial": {
+            "FriendlyName": {
+              "Value": "Node", 
+              "VariableType": 24
+            }, 
+            "LocalToParentTransform": {
+              "Transform": {
+                "Rotation": [
+                  0, 
+                  0, 
+                  0
+                ], 
+                "Scale": [
+                  1, 
+                  1, 
+                  1
+                ], 
+                "Translation": [
+                  0.0, 
+                  0.75, 
+                  0.0
+                ]
+              }, 
+              "VariableType": 27
+            }, 
+            "Type": {
+              "Value": "UrbanGeoNode", 
+              "VariableType": 19
+            }, 
+            "rotate": {
+              "Value": [
+                0.0, 
+                0.0, 
+                0.0
+              ], 
+              "VariableType": 33
+            }, 
+            "scale": {
+              "Value": [
+                0.9189187288284302, 
+                0.9189187288284302, 
+                0.9189187288284302
+              ], 
+              "VariableType": 33
+            }, 
+            "unreal_instance": {
+              "Value": "DataAssetBuilding_L3/roof_window_01", 
+              "VariableType": 24
+            }
+          }
+        }
+      ]
+    }
+  ], 
+  "SubPart": {}, 
+  "Trivial": {
+    "FriendlyName": {
+      "Value": "UE_InstanceLayouter", 
+      "VariableType": 24
+    }, 
+    "LocalToParentTransform": {
+      "Transform": {
+        "Rotation": [
+          0, 
+          0, 
+          0
+        ], 
+        "Scale": [
+          1, 
+          1, 
+          1
+        ], 
+        "Translation": [
+          2583, 
+          470, 
+          165
+        ]
+      }, 
+      "VariableType": 27
+    }, 
+    "Type": {
+      "Value": "UrbanEntity", 
+      "VariableType": 19
+    }
+  }
+}
