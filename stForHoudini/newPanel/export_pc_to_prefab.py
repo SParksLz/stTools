@@ -8,7 +8,6 @@ import pprint as pp
 # nodePath = "/obj/UHA_Building_Body_Generator/UHA_Building_Body_Generator1/Roof/RoofTop_PC2/RoofTop1"
 # node = hou.node(nodePath)
 # geo = node.geometry()
-
 def main() :
     jsonDir = "G:/51liuzhen/prefab_json/v1_dev"
 
