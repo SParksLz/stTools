@@ -61,6 +61,7 @@ def main() :
     node = hou.node(nodePath)
     geo = node.geometry()
     pt_list = geo.points()
+
     
     for pt in pt_list :
         repeatedList = []
