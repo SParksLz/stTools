@@ -4,7 +4,7 @@ import sys
 import numpy as np
 from xml.etree.ElementTree import parse
 
-# fileName = node.evalParm("xodr_in")
+fileName = node.evalParm("xodr_in")
 
 link_template = {
     "contactPoint": None,
@@ -13,13 +13,17 @@ link_template = {
 }
 
 node = hou.pwd()
-global_geo = node.geometry()
 
+global_geo = node.geometry()
 global_geo.addAttrib(hou.attribType.Point, "start_position", (0.0, 0.0, 0.0))
 global_geo.addAttrib(hou.attribType.Point, "hdg", 0.0)
 global_geo.addAttrib(hou.attribType.Point, "roadId", -1)
 global_geo.addAttrib(hou.attribType.Point, "start_point", 0)
 global_geo.addAttrib(hou.attribType.Point, "junction", -1)
+
+global_geo.addArrayAttrib(hou.attribType.Point, "link_predecessor", hou.attribData.Dict)
+global_geo.addArrayAttrib(hou.attribType.Point, "link_successor", hou.attribData.Dict)
+
 new_pt_group = global_geo.createPointGroup("newPt")
 
 
@@ -45,8 +49,44 @@ def od_reader(file):
 
             road_plan_view = road.find("planView")
             road_pv_geometry = road_plan_view.findall("geometry")
+
+            road_lanes = road.find("lanes")
+
+            road_predecessor = []
+            road_successor = []
+
+            temp = link_template
+
+            link = road.find("link")
+            try:
+                link_predecessors = link.findall("predecessor")
+            except:
+                # print("{} has not predecessor".format(road_id))
+                link_predecessors = []
+            try:
+                link_successors = link.findall("successor")
+            except:
+                # print("{} has not successor".format(road_id))
+                link_successors = []
+            if len(link_predecessors) > 0:
+                for pre in link_predecessors:
+                    for k in link_template:
+                        temp[k] = pre.get(k)
+                    road_predecessor.append(temp)
+                    temp = link_template
+            if len(link_successors) > 0:
+                for suc in link_successors:
+                    for k in link_template:
+                        temp[k] = pre.get(k)
+                    temp = link_template
+                    road_successor.append(temp)
+
+            # print(road_successor)
+            # print(road_predecessor)
+
             for geo in road_pv_geometry:
-                delta_s = 4
+                delta_s = 1
+
 
                 geo_length = float(geo.get("length"))
                 geo_s = float(geo.get("s"))
@@ -63,6 +103,7 @@ def od_reader(file):
                 geo_start_p = np.array([geo_x, hdg, geo_y])
 
                 sub_geo = geo.findall("*")
+                # road modeling
                 for poly3 in sub_geo:
                     if poly3.tag == "paramPoly3":
                         a_u = float(poly3.get("aU"))
@@ -93,41 +134,17 @@ def od_reader(file):
                             newpoint.setAttribValue("roadId", road_id)
                             newpoint.setAttribValue("hdg", hdg)
                             newpoint.setAttribValue("junction", road_junction)
-
-            # road_predecessor = []
-            # road_successor = []
-            #
-            # temp = link_template
-            #
-            # link = road.find("link")
-            # try :
-            #     link_predecessors = link.findall("predecessor")
-            # except :
-            #     print("{} has not predecessor".format(road_id))
-            # try :
-            #     link_successors = link.findall("successor")
-            # except :
-            #     print("{} has not successor".format(road_id))
-            # if len(link_predecessors) > 0:
-            #     for pre in link_predecessors:
-            #         for k in link_template:
-            #             temp[k] = pre.get(k)
-            #         road_predecessor.append(temp)
-            #         temp = link_template
-            # if len(link_successors) > 0:
-            #     for suc in link_successors:
-            #         for k in link_template:
-            #             temp[k] = pre.get(k)
-            #         temp = link_template
-            #         road_successor.append(temp)
-            # # print(link_predecessors)
-            # # print(link_successors)
+                            newpoint.setAttribValue("link_predecessor", road_predecessor)
+                            newpoint.setAttribValue("link_successor", road_successor)
+                # lanes modeling
 
 
 
 class Lane(object):
-    def __init__(self):
-        pass
+    def __init__(self, lane_offset, lane_section):
+        self.laneOffset = lane_offset
+        self.laneSection = lane_section
+
 
 
 class Road(object):
@@ -145,11 +162,5 @@ class Road(object):
         pass
 
 
-
-
-
-
-if __name__ == "__main__":
-    current_path = os.path.abspath(".")
-    od_file = os.path.join(current_path, "sampler\\CityScape6.xodr")
-    od_reader(od_file)
+od_file = "G:\\gitpool\\sparksTools\\stForHoudini\\ODReader\\sampler\\large_scale_city_road_01_mod.xodr"
+od_reader(fileName)
