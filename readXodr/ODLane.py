@@ -22,7 +22,7 @@ class LaneSectionLrLane_Access(object) :
 
 
 class LaneSectionLcrLane_RoadMark(object) :
-    def __init__(self):
+    def __init__(self, xml_node):
         pass
 
 class LaneSectionLrLane_Rule(object) :
@@ -55,9 +55,13 @@ class LaneSectionCenterLane(object):
         self.level = False
 
         # lane info
-        self.roadMark = [LaneSectionLcrLane_RoadMark(i) for i in xml_node.findall("roadMark")]  # lrc
+        self.roadMark = [LaneSectionLcrLane_RoadMark(i) for i in xml_node.findall("roadMark") ]  # lrc
         #link
-        self.link = LaneSectionLcrLaneLink(xml_node.findall("link"))
+        link_node = xml_node.find("link")
+        if link_node :
+            self.link = LaneSectionLcrLaneLink(link_node)
+        else :
+            self.link = None
 
 class LaneSectionLRLane(object):
     def __init__(self, xml_node):
@@ -71,19 +75,23 @@ class LaneSectionLRLane(object):
         self.border = [LaneGeo.LaneSectionLRLaneBorder(i) for i in xml_node.findall("border")]
 
         #lane info
-        self.access = [LaneSectionLrLane_Access(i) for i in xml_node.finall("access")]
-        self.rule = [LaneSectionLrLane_Rule(i) for i in xml_node.finall("rule")]
+        self.access = [LaneSectionLrLane_Access(i) for i in xml_node.findall("access")]
+        self.rule = [LaneSectionLrLane_Rule(i) for i in xml_node.findall("rule")]
         self.material = [LaneSectionLrLane_Material(i) for i in xml_node.findall("material")]
         self.speed = [LaneSectionLrLane_Speed(i) for i in xml_node.findall("speed")]
         self.roadMark = [LaneSectionLcrLane_RoadMark(i) for i in xml_node.findall("roadMark")] #lrc
 
         #link info
-        self.link = LaneSectionLcrLaneLink(xml_node.findall("link"))
+        link_node = xml_node.find("link")
+        if link_node :
+            self.link = LaneSectionLcrLaneLink(link_node)
+        else:
+            self.link = None
 
 
 class LaneSectionCenter(object):
     def __init__(self, xml_node):
-        self.lane = LaneSectionCenterLane(xml_node.find("center"))
+        self.lane = LaneSectionCenterLane(xml_node.find("lane"))
 
 class LaneSectionLR(object) :
     def __init__(self, xml_node):
@@ -102,9 +110,19 @@ class LaneSection(object) :
         self.s = xml_node.get("s")
         self.singleSide = xml_node.get("singleSide")
 
-        self.center = xml_node.find("center")
-        self.left = LaneSectionLeft(xml_node.find("left"))
-        self.right = LaneSectionRight(xml_node.find("right"))
+        self.center = LaneSectionCenter(xml_node.find("center"))
+
+        left_node = xml_node.find("left")
+        right_node = xml_node.find("right")
+        if left_node:
+            self.left = LaneSectionLeft(left_node)
+        else :
+            self.left = None
+
+        if right_node:
+            self.right = LaneSectionRight(right_node)
+        else :
+            self.right = None
 
 class Lanes(object):
     def __init__(self, xml_node):

@@ -14,7 +14,8 @@ class RoadSurfaceCRG(object):
 
 class RoadSurface(object) :
     def __init__(self, xml_node):
-        self.CRG = [RoadSurfaceCRG(i) for i in xml_node.findall("CRG")]
+        if xml_node :
+            self.CRG = [RoadSurfaceCRG(i) for i in xml_node.findall("CRG")]
 
 
 
