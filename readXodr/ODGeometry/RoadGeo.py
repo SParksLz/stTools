@@ -59,6 +59,55 @@ class RoadLateralProfile(object) :
 
 
 #geometry
+class RoadPlanViewGeometryLine(object) :
+    def __init__(self, xml_node):
+        pass
+
+class RoadPlanViewGeometrySpiral(object) :
+    def __init__(self, xml_node):
+        self.curvStart = xml_node.get("curvStart")
+        self.curvEnd = xml_node.get("curvEnd")
+
+class RoadPlanViewGeometryArc(object) :
+    def __init__(self, xml_node):
+        self.curvature = xml_node.get("curvature")
+
+class RoadPlanViewGeometryPoly3(object):
+    def __init__(self, xml_node):
+        self.a = xml_node.get("a")
+        self.b = xml_node.get("b")
+        self.c = xml_node.get("c")
+        self.d = xml_node.get("d")
+
+class RoadPlanViewGeometryParamPoly3(object):
+    def __init__(self, xml_node):
+        self.aU = xml_node.get("aU")
+        self.aV = xml_node.get("aV")
+        self.bU = xml_node.get("bU")
+        self.bV = xml_node.get("bV")
+        self.cU = xml_node.get("cU")
+        self.cV = xml_node.get("cV")
+        self.dU = xml_node.get("dU")
+        self.dV = xml_node.get("dV")
+        self.pRange = xml_node.get("pRange")
+
+class RoadPlanViewGeometryDescription(object) :
+    def __init__(self, name, xml_node):
+        if name == "line" :
+            self.desc = None
+            self.name = name
+        elif name == "spiral" :
+            self.desc = RoadPlanViewGeometrySpiral(xml_node)
+            self.name = "spiral"
+        elif name == "arc" :
+            self.desc = RoadPlanViewGeometryArc(xml_node)
+            self.name = "arc"
+        elif name == "poly3" :
+            self.desc = RoadPlanViewGeometryParamPoly3(xml_node)
+            self.name = "poly3"
+        elif name == "paramPoly3" :
+            self.desc = RoadPlanViewGeometryParamPoly3(xml_node)
+            self.name = "paramPoly3"
 class RoadPlanViewGeometry(object):
     def __init__(self, xml_node):
         self.s = xml_node.get("s")
@@ -66,6 +115,11 @@ class RoadPlanViewGeometry(object):
         self.y = xml_node.get("y")
         self.hdg = xml_node.get("hdg")
         self.length = xml_node.get("length")
+
+        self.desc = RoadPlanViewGeometryDescription(xml_node.find("*").tag, xml_node.find("*"))
+
+
+
 
 class RoadPlanView(object):
     def __init__(self, xml_node):

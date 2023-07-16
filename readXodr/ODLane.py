@@ -1,4 +1,4 @@
-import ODGeometry.LaneGeo as LaneGeo
+from readXodr.ODGeometry import LaneGeo
 
 #----
 class LaneSectionLrLane_Material(object) :

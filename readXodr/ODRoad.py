@@ -3,9 +3,10 @@ import sys
 import numpy as np
 from xml.etree.ElementTree import parse
 
-import ODLane
-import ODGeometry.RoadGeo as RoadGeo
-import ODRoadLink.RoadLink as RoadLink
+from readXodr import ODLane
+
+from readXodr.ODGeometry import RoadGeo
+from readXodr.ODRoadLink import RoadLink
 
 
 class RoadTypeSpeed(object):
@@ -49,7 +50,7 @@ class Road(object) :
         elevationProfile_node = xml_node.find("elevationProfile")
 
         if surface_node :
-            self.surface = RoadGeo.RoadSurface(surface_node)
+            self.surface = RoadLink.RoadSurface(surface_node)
         else :
             self.surface = None
         if lateralProfile_node :
@@ -78,35 +79,35 @@ class testA(object) :
     def get_a(self):
         return self.a
 
-if __name__ == "__main__" :
-    file_name = "../gicc.xodr"
-    od = None
-    with open(file_name, encoding="utf-8") as f:
-        od = parse(f)
-
-
-    road_array = od.findall("road")
-    for road in road_array :
-        current_road = Road(road)
-        print("----------------------{}-------------------".format(current_road.id))
-        current_lanes = current_road.lanes
-        for s in current_lanes.laneSection :
-            print("    ---left---")
-            if s.left :
-                for lane in s.left.lane :
-                    print(lane)
-            print("    ---right---")
-            if s.right :
-                for lane in s.right.lane :
-                    print(lane)
-
-            print("    ---center---")
-            print(s.center.lane)
-
-
-
-
-        # for road_type in current_road.road_type :
-        #     print("current road : {} road type : {} {} {}".format(current_road.id, road_type.s, road_type.type, road_type.country));
-
-
+# if __name__ == "__main__" :
+#     file_name = "../gicc.xodr"
+#     od = None
+#     with open(file_name, encoding="utf-8") as f:
+#         od = parse(f)
+#
+#
+#     road_array = od.findall("road")
+#     for road in road_array :
+#         current_road = Road(road)
+#         print("----------------------{}-------------------".format(current_road.id))
+#         current_lanes = current_road.lanes
+#         for s in current_lanes.laneSection :
+#             print("    ---left---")
+#             if s.left :
+#                 for lane in s.left.lane :
+#                     print(lane)
+#             print("    ---right---")
+#             if s.right :
+#                 for lane in s.right.lane :
+#                     print(lane)
+#
+#             print("    ---center---")
+#             print(s.center.lane)
+# #
+# #
+# #
+#
+#         # for road_type in current_road.road_type :
+#         #     print("current road : {} road type : {} {} {}".format(current_road.id, road_type.s, road_type.type, road_type.country));
+#
+#
