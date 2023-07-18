@@ -1,9 +1,11 @@
 import os
 import sys
+import imp
 import numpy as np
 from xml.etree.ElementTree import parse
 
 from readXodr import ODLane
+imp.reload(ODLane)
 
 from readXodr.ODGeometry import RoadGeo
 from readXodr.ODRoadLink import RoadLink
