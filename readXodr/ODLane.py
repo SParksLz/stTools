@@ -42,11 +42,11 @@ class LaneSectionLcrLaneLink_ps(object) :
 
 class LaneSectionLcrLaneLink_Predecessor(LaneSectionLcrLaneLink_ps) :
     def __init__(self, xml_node):
-        super().__init__(xml_node)
+        super(LaneSectionLcrLaneLink_Predecessor, self).__init__(xml_node)
 
 class LaneSectionLcrLaneLink_Successor(LaneSectionLcrLaneLink_ps) :
     def __init__(self, xml_node):
-        super().__init__(xml_node)
+        super(LaneSectionLcrLaneLink_Successor, self).__init__(xml_node)
 
 class LaneSectionCenterLane(object):
     def __init__(self, xml_node):
@@ -99,11 +99,11 @@ class LaneSectionLR(object) :
 
 class LaneSectionLeft(LaneSectionLR):
     def __init__(self, xml_node):
-        super().__init__(xml_node)
+        super(LaneSectionLeft, self).__init__(xml_node)
 
 class LaneSectionRight(LaneSectionLR):
     def __init__(self, xml_node):
-        super().__init__(xml_node)
+        super(LaneSectionRight, self).__init__(xml_node)
 
 class LaneSection(object) :
     def __init__(self, xml_node):

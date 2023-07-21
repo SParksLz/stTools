@@ -12,11 +12,11 @@ class RoadLinkPS(object):
 
 class RoadLinkPredecessor(RoadLinkPS) :
     def __init__(self, xml_node):
-        super().__init__(xml_node)
+        super(RoadLinkPredecessor, self).__init__(xml_node)
 
 class RoadLinkPredecessor(RoadLinkPS) :
     def __init__(self, xml_node):
-        super().__init__(xml_node)
+        super(RoadLinkPredecessor, self).__init__(xml_node)
 
 class RoadLink(object):
     def __init__(self, xml_node):
